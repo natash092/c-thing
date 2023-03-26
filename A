@@ -1,0 +1,30 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+int main() {
+    bool enabled = false;
+    bool shift_pressed = false;
+
+    while (true) {
+        if (_kbhit()) {
+            int key = _getch();
+
+            if (key == 0 || key == 224) {  // extended key
+                key = _getch();
+                if (key == 16) {  // Shift key
+                    shift_pressed = !shift_pressed;
+                    enabled = shift_pressed;
+                }
+            }
+        }
+
+        if (enabled) {
+            // Do something when enabled
+            cout << "Enabled" << endl;
+        }
+    }
+
+    return 0;
+}
