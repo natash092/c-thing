@@ -1,0 +1,38 @@
+#include <iostream>
+#include <Windows.h>
+
+using namespace std;
+
+int main()
+{
+    bool lock = false;
+    int x, y;
+    COLORREF color;
+
+    while (true)
+    {
+        if (GetAsyncKeyState(VK_RBUTTON))
+        {
+            lock = true;
+            while (lock)
+            {
+                POINT p;
+                GetCursorPos(&p);
+                x = p.x;
+                y = p.y;
+                HDC hdc = GetDC(NULL);
+                color = GetPixel(hdc, x, y);
+                ReleaseDC(NULL, hdc);
+                if (color == RGB(255, 0, 0)) //Red color
+                {
+                    cout << "Red color locked at (" << x << ", " << y << ")" << endl;
+                }
+            }
+        }
+        else
+        {
+            lock = false;
+        }
+    }
+    return 0;
+}
